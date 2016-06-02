@@ -1,0 +1,29 @@
+﻿<Window x:Class="Apache.Ignite.Visor.Connect"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Apache.Ignite.Visor"
+        xmlns:controls="clr-namespace:Apache.Ignite.Visor.Controls"
+        xmlns:markup="http://schemas.kent.boogaart.com/converters"
+        mc:Ignorable="d"
+        Title="Connect to a cluster..." Height="300" Width="300"
+        d:DataContext="{d:DesignInstance local:ConnectViewModel}">
+    <Grid>
+        <StackPanel IsEnabled="{Binding IsBusy, Converter={markup:BooleanToVisibilityConverter IsReversed=True}}">
+            <GroupBox Header="Discovery configuration">
+                <StackPanel>
+                    <RadioButton>Multicast</RadioButton>
+                    <RadioButton>Static</RadioButton>
+                </StackPanel>
+            </GroupBox>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Command="{Binding ConnectCommand}">Connect</Button>
+            </StackPanel>
+        </StackPanel>
+
+        <Grid Visibility="{Binding IsBusy, Converter={markup:BooleanToVisibilityConverter}}" Background="#44000000">
+            <controls:SpinnerCogs />
+        </Grid>
+    </Grid>
+</Window>
