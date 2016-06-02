@@ -8,13 +8,9 @@
         Title="Ignite.NET Cluster Monitor" Height="350" Width="525" d:DataContext="{d:DesignInstance model:Cluster}">
     <TabControl>
         <TabItem Header="Cluster">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ListBox ItemsSource="{Binding Nodes}" />
-            </Grid>
+            <GroupBox Header="Nodes">
+                <DataGrid ItemsSource="{Binding Nodes}" />
+            </GroupBox>
         </TabItem>
         <TabItem Header="Caches">
             

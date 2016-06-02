@@ -16,7 +16,7 @@ namespace Apache.Ignite.Visor.Model
         {
             _ignite = ignite;
 
-            Nodes = new ObservableCollection<IClusterNode>(ignite.GetCluster().GetNodes());
+            Nodes = new ObservableCollection<IClusterNode>(ignite.GetCluster().ForRemotes().GetNodes());
 
             ignite.GetEvents().EnableLocal(EventType.DiscoveryAll);
             ignite.GetEvents().LocalListen(this, EventType.DiscoveryAll);
