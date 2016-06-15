@@ -89,6 +89,7 @@
     <Compile Include="Controls\SpinnerCogs.xaml.cs">
       <DependentUpon>SpinnerCogs.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\NativeMethods.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="Connect.xaml">

@@ -15,8 +15,11 @@ namespace Apache.Ignite.Visor
 
         public ConnectViewModel(Action<Cluster> onConnected)
         {
+            NativeMethods.AllocConsole();
+
             _onConnected = onConnected;
             ConnectCommand = new RelayCommand(Connect);
+            Connect();
         }
 
         public ICommand ConnectCommand { get; }
@@ -46,7 +49,7 @@ namespace Apache.Ignite.Visor
             IsBusy = true;
             try
             {
-                var cluster = await Cluster.Connect(new IgniteConfiguration());
+                var cluster = await Cluster.Connect();
                 _onConnected(cluster);
             }
             catch (Exception e)
