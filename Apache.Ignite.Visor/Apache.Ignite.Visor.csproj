@@ -39,8 +39,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Apache.Ignite.Core, Version=1.6.0.11366, Culture=neutral, PublicKeyToken=a487a7ff0b2aaa4a, processorArchitecture=MSIL">
-      <HintPath>packages\Apache.Ignite.1.6.0\lib\net40\Apache.Ignite.Core.dll</HintPath>
+    <Reference Include="Apache.Ignite.Core, Version=1.7.0.417, Culture=neutral, PublicKeyToken=a487a7ff0b2aaa4a, processorArchitecture=MSIL">
+      <HintPath>packages\Apache.Ignite.1.7.0-nightly0417\lib\net40\Apache.Ignite.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19038, Culture=neutral, PublicKeyToken=0e453835af4ee6ce, processorArchitecture=MSIL">
@@ -136,6 +136,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="NuGet.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -147,7 +150,7 @@
   <PropertyGroup>
     <PostBuildEvent>
 if not exist "$(TargetDir)Libs" md "$(TargetDir)Libs"
-xcopy /s /y "$(SolutionDir)packages\Apache.Ignite.1.6.0\Libs\*.*" "$(TargetDir)Libs"</PostBuildEvent>
+xcopy /s /y "$(SolutionDir)packages\Apache.Ignite.1.7.0-nightly0417\Libs\*.*" "$(TargetDir)Libs"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
