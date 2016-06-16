@@ -15,7 +15,15 @@ namespace Apache.Ignite.Visor.Model
 {
     internal class Cluster : IEventListener<DiscoveryEvent>
     {
-        // TODO: Unmanaged console output
+        private static readonly IgniteConfiguration[] Configs = GetDiscos()
+            .SelectMany(disco => new[] {null, "127.0.0.1"}.Select(lh => new {disco, lh}))
+            .Select(pair => new IgniteConfiguration
+            {
+                ClientMode = true,
+                DiscoverySpi = pair.disco,
+                Localhost = pair.lh
+            }).ToArray();
+
 
         private readonly IIgnite _ignite;
 
@@ -31,37 +39,28 @@ namespace Apache.Ignite.Visor.Model
 
         public static async Task<Cluster> Connect()
         {
-            var tasks = GetDiscos().SelectMany(disco => new[] {null, "127.0.0.1"}.Select(lh => new {disco, lh}))
-                .Select(pair => new IgniteConfiguration
-                {
-                    ClientMode = true,
-                    DiscoverySpi = pair.disco,
-                    Localhost = pair.lh
-                }).Select(Connect);
+            var tasks = Enumerable.Range(0, Configs.Length).Select(Connect);
 
-            // TODO: Try one by one with timeout instead of WhenAny. Ignite blocks internally.
             var completeTask = await Task.WhenAny(tasks);
 
             return completeTask.Result;
         }
 
-        public static Task<Cluster> Connect(IgniteConfiguration cfg)
+        private static Task<Cluster> Connect(int configIdx)
         {
-            cfg.ClientMode = true;
             return Task.Factory.StartNew(() =>
             {
-                while (true)
-                {
-                    try
-                    {
-                        return new Cluster(Ignition.Start(cfg));
-                    }
-                    catch (Exception)
-                    {
-                        // Ignore
-                    }
-                }
+                
+                // 1. Run separate process and wait for exit code
+                // 2. If process returned 0, then config is good.
+
+                return new Cluster(StartIgnite(configIdx));
             });
+        }
+
+        public static IIgnite StartIgnite(int configIdx)
+        {
+            return Ignition.Start(Configs[configIdx]);
         }
 
         public ObservableCollection<IClusterNode> Nodes { get; }
